@@ -2,5 +2,7 @@ email/
 node_modules/
 build/
 src/servidor/node_modules/*
+src/servidor/.data.json
+src/servidor/.env
 src/Old_Servidor/*
 .vscode/

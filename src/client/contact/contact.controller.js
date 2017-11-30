@@ -16,7 +16,9 @@ class contactCtrl {
       "inputEmail": $scope.contact.inputEmail, 
       "inputPhone": $scope.contact.inputPhone, 
       "inputMessage": $scope.contact.inputMessage,
+      "location":window.location.origin,
       "token":'contact_form'};
+      
       var contact_form = JSON.stringify(data);
       console.log(contact_form);
       Contact.sendEmail(contact_form).then(function(res){

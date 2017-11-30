@@ -1,106 +1,67 @@
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
-var sg = "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" 
-//process.env.SENDGRID_API_KEY;
+var info = require('../.data.json');
+var sg=info.SENDGRID_API_KEY;
 
 exports.sendEmail=function(req,res){
-        console.log(sg);
         var emailTo = '';
         var emailFrom = '';
+        var subject='';
+        var ruta='';
         var body = '';
+        console.log(req.body.location);
         switch (req.body.type) {
-            case 'contact':
-              emailTo = req.body.inputEmail;
-              emailFrom = "alejandrogarsanz@gmail.com";
-              body = '<body>' +
-                '<div id="contact-email">' +
-                '<div> <h1>Contact with Repair on Time</h1> <h4>Subject: ' + req.body.subject +
-                '</h4></div>' +
-                '<section>' +
-                'Name:<p>' + req.body.inputName + '</p>' +
-                'Email: <p>' + req.body.inputEmail + '</p>' +
-                'Message:<p>' + req.body.inputMessage + '</p></section>' +
-                '</div>' +
-                ' </body>';
-              break;
-            case 'admin':
-              emailTo = req.body.inputEmail;
-              emailFrom = "alejandrogarsanz@gmail.com";
-              body = '<body>' +
-                '<div id="contact-email">' +
-                '<div> <h1>Contact with Repair on Time</h1> <h4>Subject: ' + req.body.subject +
-                '</h4></div>' +
-                '<section>' +
-                'Name:<p>' + req.body.inputName + '</p>' +
-                'Email: <p>' + req.body.inputEmail + '</p>' +
-                'Message:<p>' + req.body.inputMessage + '</p></section>' +
-                '</div>' +
-                ' </body>';
-              break;
-            case 'modify':
-              break;
-            case 'signup':
-              break;
-          }
+        case 'alta':
+            emailTo = req.body.inputEmail;
+            emailFrom = "alejandrogarsanz@gmail.com";
+            subject = 'Tu Alta en ServiOntiTec';
+            ruta = "<a href='http://"+"/ServiOntiTec/#/user/activar/" + arrArgument['token'] + "'>aqu&iacute;</a>";
+            body = 'Gracias por unirte a nuestra aplicaci&oacute;n+ Para finalizar el registro, pulsa ' + ruta;
+            break;
+    
+        case 'modificacion':
+            emailTo = req.body.inputEmail;
+            emailFrom = "alejandrogarsanz@gmail.com";
+            subject = 'Tu Nuevo Password en ServiOntiTec';
+            ruta = "<a href='http://"+"/ServiOntiTec/#/user/cambiarpass/" + arrArgument['token'] + "'>aqu&iacute;</a>";
+            body = 'Para recordar tu password pulsa ' + ruta;
+            break;
+        case 'contact':
+            emailTo = req.body.inputEmail;
+            emailFrom = "alejandrogarsanz@gmail.com";
+            subject = 'Tu Petici&oacute;n a ServiOntiTec ha sido enviada';
+            ruta = '<a href="'+ req.body.location +'"'+'>aqu&iacute;</a>';
+            body = req.body.inputMessage+'Para visitar nuestra web, pulsa ' + ruta;
+            break;
+        }
         
           var template =
             '<html>' +
             '<head>' +
             '<meta charset="utf-8" />' +
             '<style>' +
-            '* {' +
-            'box-sizing: border-box;' +
-            '-webkit-box-sizing: border-box;' +
-            '-moz-box-sizing: border-box;' +
-            '-webkit-font-smoothing: antialiased;' +
-            '-moz-font-smoothing: antialiased;' +
-            '-o-font-smoothing: antialiased;' +
-            'font-smoothing: antialiased;' +
-            'text-rendering: optimizeLegibility;}' +
-            ' body { color: #C0C0C0; font-family: Arial, san-serif;}' +
-            ' h1 { margin: 10px 0 0 0;}' +
-            ' h4 { margin: 0 0 20px 0;}' +
-            ' #contact-email {' +
-            'background-color: rgba(72, 72, 72, 0.7);' +
-            'padding: 10px 20px 30px 20px;' +
-            ' max-width: 100%;' +
-            ' float: left;' +
-            'left: 50%;' +
-            'position: absolute;' +
-            'margin-top: 30px;' +
-            ' margin-left: -260px;' +
-            ' border-radius: 7px;' +
-            '-webkit-border-radius: 7px;' +
-            '-moz-border-radius: 7px;}' +
-            ' #contact-email p { font-size: 15px; margin-bottom: 10px;' +
-            'font-family: Arial, san-serif; }' +
-            ' #contact-email p {' +
-            'width: 100%;' +
-            'background: #fff;' +
-            'border: 0;' +
-            '-moz-border-radius: 4px;' +
-            '-webkit-border-radius: 4px;' +
-            ' border-radius: 4px;' +
-            ' margin-bottom: 25px;' +
-            ' padding: 10px; }' +
-            '@media only screen and (max-width: 580px) {' +
-            '#contact-form {' +
-            ' left: 3%;' +
-            ' margin-right: 3%;' +
-            ' width: 88%;' +
-            ' margin-left: 0;' +
-            ' padding-left: 3%;' +
-            ' padding-right: 3%; } }' +
+            '* { margin: 0; padding: 0;text-align: center;}'+
+            'body { margin: 0 auto; width: 600px; height: 300px;}'+
+            'header { padding: 20px; background-color: blue; color: white; padding-left: 20px; font-size: 25px;}'+
+            'section { padding-top: 50px; padding-left: 50px; margin-top: 3px; margin-bottom: 3px; height: 100px; background-color: ghostwhite;}'+
+            'footer { padding: 5px; padding-left: 20px; background-color: blue; color: white;}'+
             '</style>' +
-            '</head>' + body + '</html>';
+            '</head>'+
+            '<body>'+
+            '<header> <p>'+subject+'</p> </header>'+
+            '<section>'+ body +'</section>'+
+            '<footer> <p> Enviado por ServiOntiTec</p></footer>'+
+            '</body>'+
+            '</html>';
         
           var email = {
             from: emailFrom,
             to: emailTo,
-            subject: "Prueba Contact",
+            subject: subject,
             text: req.body.inputMessage,
             html: template
           };
+          console.log(email);
           //Input APIKEY Sendgrid
           var options = {
             auth: {
