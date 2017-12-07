@@ -11,8 +11,9 @@ import './config/app.templates';
 import './layout';
 import './components';
 import './home';
-import './services'
-import './contact'
+import './services';
+import './contact';
+import './listado';
 
 // Create and bootstrap application
 const requires = [
@@ -21,6 +22,7 @@ const requires = [
   'app.layout',
   'app.components',
   'app.home',
+  'app.listado',
   'app.services',
   'app.contact'
 ];

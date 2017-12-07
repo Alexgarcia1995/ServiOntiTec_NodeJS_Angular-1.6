@@ -8,8 +8,9 @@ var http = require('http'),
     passport = require('passport'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose'),
-    dotenv = require('dotenv');
-
+    dotenv = require('dotenv'),
+    info = require('./.data.json');
+    
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
@@ -31,16 +32,13 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-if(isProduction){
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect('mongodb://localhost/conduit');
-  mongoose.set('debug', true);
-}
+mongoose.connect(info.MONGODB);
+mongoose.set('debug', true);
 
 require('./models/User');
-require('./models/Article');
-require('./models/Comment');
+// require('./models/Article');
+// require('./models/Comment');
+require('./models/services');
 require('./config/passport');
 
 app.use(require('./routes'));

@@ -6,7 +6,6 @@ router.post('/', function(req, res) {
 });
 
 router.get('/', function(req, res, next) {
-    console.log("Hola");
     return res.json({tags: "He llegado"});
 });
 

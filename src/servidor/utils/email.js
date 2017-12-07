@@ -9,7 +9,6 @@ exports.sendEmail=function(req,res){
         var subject='';
         var ruta='';
         var body = '';
-        console.log(req.body.location);
         switch (req.body.type) {
         case 'alta':
             emailTo = req.body.inputEmail;
@@ -61,7 +60,6 @@ exports.sendEmail=function(req,res){
             text: req.body.inputMessage,
             html: template
           };
-          console.log(email);
           //Input APIKEY Sendgrid
           var options = {
             auth: {

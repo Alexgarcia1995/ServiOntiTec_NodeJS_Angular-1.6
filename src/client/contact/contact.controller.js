@@ -1,5 +1,5 @@
 class contactCtrl {
-  constructor($scope,Contact) {
+  constructor($scope,Contact,$state) {
     'ngInject';
 
     $scope.contact = {
@@ -20,20 +20,12 @@ class contactCtrl {
       "token":'contact_form'};
       
       var contact_form = JSON.stringify(data);
-      console.log(contact_form);
+      //console.log(contact_form);
       Contact.sendEmail(contact_form).then(function(res){
-        console.log(res);
+        if(res){
+          $state.go("app.home");
+        }
       })
-      // services.get('contact', 'process_contact', contact_form).then(function (response) {
-      //     console.log(response);
-      //     response = response.split("|");
-      //     $scope.message = response[1];
-      //     if (response[0].substring(1,5) == 'true') {
-      //         $scope.class = 'alert alert-success';
-      //     } else {
-      //         $scope.class = 'alert alert-error';
-      //     }
-      // });
   };
 }
 }

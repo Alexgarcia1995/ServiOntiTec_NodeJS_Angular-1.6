@@ -25,5 +25,8 @@ servicesModule.service('Tags', TagsService);
 import ContactService from './contact.service';
 servicesModule.service('Contact', ContactService);
 
+import ListadoService from './listado.service';
+servicesModule.service('Listado', ListadoService);
+
 
 export default servicesModule;
