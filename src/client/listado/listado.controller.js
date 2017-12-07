@@ -19,8 +19,10 @@ class listadoCtrl {
       var city=array[i].city;
       var lat=array[i].lat;
       button.setAttribute("id",id);
+      button.setAttribute("data-toggle","modal");
+      button.setAttribute("data-target","#myModal");
       button.addEventListener("click",function(){
-          that.getid(this.getAttribute("id"));
+          that.getid(this.getAttribute("id"),array);
       })
       button.appendChild(view);
       dat.innerHTML = " " + nom +" "+city+" "+lat + "<br>";
@@ -31,7 +33,14 @@ content.appendChild(div_user);
 });
 }
 getid(identificador,array){
-  console.log(identificador,array);
+  function identify(element) { 
+    return element._id === identificador;
+  }
+  var object=array.find(identify);
+  //document.getElementById("identificador").innerHTML=object._id;
+  $("#identificador").text(object._id);
+  $("#nombre").text(object.name);
+  $("#ciudad").text(object.city);
 }
 }
 
